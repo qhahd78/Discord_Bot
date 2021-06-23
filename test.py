@@ -1,6 +1,9 @@
 import discord
-
+import json
 client = discord.Client()
+
+with open("discord.json","r") as key_file:
+    key = json.load(key_file)
 
 @client.event
 async def on_ready(): 
@@ -18,4 +21,4 @@ async def on_message(message):
         embed = discord.Embed(title="제목", description="내용", color=0x62c1cc)
         embed.set_footer(text="하단내용")
         await message.channel.send("test 결과", embed=embed)
-client.run('ODU3MTk3MzM2OTQ1MzYwOTE2.YNMFOw.L9YB9ZJ_Kp_HP-eHxxcWtSEhSA4')
+client.run(key["KEY"])
