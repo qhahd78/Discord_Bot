@@ -1,7 +1,7 @@
 import discord
 import json
 import os
-from catapi import cat, dog
+from api import cat, dog
 
 client = discord.Client()
 
