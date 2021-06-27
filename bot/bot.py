@@ -1,4 +1,5 @@
 import discord
+from discord.ext import commands
 import json
 import os
 from api import cat, dog
@@ -36,4 +37,15 @@ async def on_message(message):
         await client.change_presence(status=discord.Status.offline)
     elif message.content.startswith('!핑'):
         await message.channel.send('퐁!')
+    elif message.content.startswith("!끄투"):
+        channel = message.channel
+        await channel.send('끄투 시작!')
+
+        def check(m):
+            return m.content == '끄투' and m.channel == channel
+
+        msg = await client.wait_for('message', check=check)
+        if msg == "야!" : 
+            await channel.send('끄투 불렀니?')
+    
 client.run(key["KEY"])
