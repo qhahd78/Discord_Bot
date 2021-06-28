@@ -1,12 +1,11 @@
-# from Discord_Bot.ggutoo.api import apifun
-from requests.models import default_hooks
+# from requests.models import default_hooks
 import discord
 from discord.ext import commands
 import json
 import os
 import asyncio
 from api import cat, dog
-from ..ggutoo import api
+from ggutoo import api
 
 client = discord.Client()
 
@@ -50,9 +49,12 @@ async def on_message(message):
         await message.channel.send(embed=embed)
         def check(m): 
             return m.author == message.author and m.channel == channel
+        # input 기다리기
         msg2 = await client.wait_for('message', check=check)
-        sentences = api.apifun(msg2)
-        embed = discord.Embed(title=msg2.content, description="입력한 단어 뜻 " + sentences)
+        # api로부터 응답 받아와서 저장
+        sentences = api.apifun(msg2.content)
+        # 응답 전송
+        embed = discord.Embed(title=msg2.content, description=str(sentences))
 
         await message.channel.send(embed=embed)
         # return 

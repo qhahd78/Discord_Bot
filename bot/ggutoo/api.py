@@ -5,16 +5,17 @@ import requests
 from urllib.parse import urlencode, unquote, quote_plus
 
 # 시크릿 키 가져오기 
-with open("key.json","r") as file: 
-    key = json.load(file)
+# with open("key.json","r") as file: 
+#     key = json.load(file)
 
 def apifun (dictword) : 
+    print(dictword)
     url = 'https://stdict.korean.go.kr/api/search.do'
 
     # 파라미터 설정
     params = '?' + urlencode({
         'certkey_no' : '2802',
-        'key' : key['SECRET_KEY'],
+        'key' : "C23B4A6A62EB649B9075BD9929E9BDC8",
         'type_search':'search',
         quote_plus('q') : dictword
     })
@@ -22,7 +23,7 @@ def apifun (dictword) :
     response = requests.get(url + unquote(params))
     # 결과 값을 string 으로 저장 
     textres = response.text
-
+    print(textres)
     # xml 형식 인식을 위해 Beautifulsoup 사용 
     soup = BeautifulSoup(textres, 'html.parser')
 
@@ -48,7 +49,7 @@ def slicing(sentences) :
         final = worddef[21:index2]
         # print(index)
         # print(index2)
-        # print(final)
+        print(final)
     return final
 
 
