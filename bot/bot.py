@@ -1,8 +1,12 @@
+# from Discord_Bot.ggutoo.api import apifun
+from requests.models import default_hooks
 import discord
 from discord.ext import commands
 import json
 import os
-from .api import cat, dog
+import asyncio
+from api import cat, dog
+from ..ggutoo import api
 
 client = discord.Client()
 
@@ -37,15 +41,29 @@ async def on_message(message):
         await client.change_presence(status=discord.Status.offline)
     elif message.content.startswith('!핑'):
         await message.channel.send('퐁!')
-    elif message.content.startswith("!끄투"):
-        channel = message.channel
-        await channel.send('끄투 시작!')
 
-        def check(m):
-            return m.content == '끄투' and m.channel == channel
+@client.event
+async def on_message(message): 
+    if message.content.startswith('!끄투'):
+        embed = discord.Embed(title="끄투겜", description="시작 단어를 입력해주세요")
+        channel = message.channel 
+        await message.channel.send(embed=embed)
+        def check(m): 
+            return m.author == message.author and m.channel == channel
+        msg2 = await client.wait_for('message', check=check)
+        sentences = api.apifun(msg2)
+        embed = discord.Embed(title=msg2.content, description="입력한 단어 뜻 " + sentences)
 
-        msg = await client.wait_for('message', check=check)
-        if msg == "야!" : 
-            await channel.send('끄투 불렀니?')
+        await message.channel.send(embed=embed)
+        # return 
+    # else : 
+    #     user_word = str(msg2.content)
+    #     answer = "입력하신 단어는" + user_word + "입니다."
+    #     embed = discord.Embed(title="끄투겜", description=answer)
+    #     await message.channel.send(embed=embed)
+    #     return
+
+
+
     
 client.run(key["KEY"])
