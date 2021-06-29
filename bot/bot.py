@@ -41,31 +41,30 @@ async def on_message(message):
     elif message.content.startswith('!핑'):
         await message.channel.send('퐁!')
 
+# 끝말잇기 게임 코드 
 @client.event
 async def on_message(message): 
     if message.content.startswith('!끄투'):
-        embed = discord.Embed(title="끄투겜", description="시작 단어를 입력해주세요")
-        channel = message.channel 
+        embed = discord.Embed(title="끄투게임", description="끄투게임을 시작합니다. 단어를 입력하세요.")
         await message.channel.send(embed=embed)
-        def check(m): 
-            return m.author == message.author and m.channel == channel
+
+        # channel = message.channel 
+        # def check(m): 
+        #     return m.author == message.author and m.channel == channel
         # input 기다리기
-        msg2 = await client.wait_for('message', check=check)
-        # api로부터 응답 받아와서 저장
-        sentences = api.apifun(msg2.content)
-        # 응답 전송
-        embed = discord.Embed(title=msg2.content, description=str(sentences))
+        while True : 
+            msg2 = await client.wait_for('message')
+            # api로부터 응답 받아와서 저장
+            sentences = api.apifun(msg2.content)
+            # 응답 전송
+            embed = discord.Embed(title=msg2.content, description=str(sentences))
 
-        await message.channel.send(embed=embed)
-        # return 
-    # else : 
-    #     user_word = str(msg2.content)
-    #     answer = "입력하신 단어는" + user_word + "입니다."
-    #     embed = discord.Embed(title="끄투겜", description=answer)
-    #     await message.channel.send(embed=embed)
-    #     return
-
-
-
-    
+            await message.channel.send(embed=embed)
+            
+            # if message.content.startswith('!끝') : 
+            #     break        
+        
+        # await message.channel.send('!종료')
+        # await client.change_presence(status=discord.Status.offline)
+        
 client.run(key["KEY"])
