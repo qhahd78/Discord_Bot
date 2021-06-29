@@ -57,9 +57,20 @@ async def on_message(message):
             # api로부터 응답 받아와서 저장
             sentences = api.apifun(msg2.content)
             # 응답 전송
-            embed = discord.Embed(title=msg2.content, description=str(sentences))
+            # 사전에 없는 단어일 경우
+            if sentences == False : 
+                embed = discord.Embed(title=msg2.content, description="사전에 없는 단어입니다. 메롱")
+                await message.channel.send(embed=embed)
+                await client.change_presence(status=discord.Status.offline)
 
-            await message.channel.send(embed=embed)
+
+            # 사전에 있는 단어일 경우 뜻 출력해주기 
+            else : 
+                embed = discord.Embed(title=msg2.content, description=str(sentences))
+                await message.channel.send(embed=embed)
+
+
+            # await message.channel.send(embed=embed)
             
             # if message.content.startswith('!끝') : 
             #     break        
