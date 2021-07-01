@@ -1,4 +1,4 @@
-from api import apifun
+from .api import apifun
 
 def test(word, li):
     # 입력 받은 문자 저장
@@ -11,7 +11,7 @@ def test(word, li):
     li.append(a)
     return lala
     
-print("끝말잇기 시작!")
+# print("끝말잇기 시작!")
 
 # 이전에 사용한 단어는 사용하지 못 하게 하기 위해 list 선언
 
@@ -21,8 +21,8 @@ def ggutoo (word):
 
     # 단어의 글자수가 1일 경우 프로그램 종료 
     if len(word) == 1 : 
-        value = False
-        print("한 글자인 단어는 안 됩니다.")
+        # value = False
+        return ("한 글자인 단어는 안 됩니다.")
 
     # 1이 아닌 경우 api 에서 검색 및 while 문에 들어간다 .
     else : 
@@ -33,13 +33,13 @@ def ggutoo (word):
         else : 
             print("단어 뜻 : %s" % meaning)
             # 한 줄 띄우기 
-            print("")
+            # print("")
             li.append(word)
             value = True
 
     while value : 
         # 몇 번 진행되는지 세어주는 변수 z 
-        z += 1
+        # z += 1
         word = input("단어입력 : ")
         # 한 글자일 경우 어떤 경우에서든 false 
         if len(word) == 1 : 
@@ -65,8 +65,8 @@ def ggutoo (word):
                 # while 문 나가기 
                 value = False 
 
-print("끝말잇기를 종료합니다.")
-print("총 %d 번 진행됐네요. " % z)
+# print("끝말잇기를 종료합니다.")
+# print("총 %d 번 진행됐네요. " % z)
 
 
     

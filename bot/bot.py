@@ -5,7 +5,7 @@ import json
 import os
 import asyncio
 from api import cat, dog
-from ggutoo import api
+from ggutoo import ggutoo
 
 client = discord.Client()
 
@@ -55,27 +55,21 @@ async def on_message(message):
         while True : 
             msg2 = await client.wait_for('message')
             # api로부터 응답 받아와서 저장
-            sentences = api.apifun(msg2.content)
+            # sentences = api.apifun(msg2.content)
+
+            # 끄투겜으로 보내기 
+            sentences = ggutoo.ggutoo(msg2.content)
             # 응답 전송
             # 사전에 없는 단어일 경우
-            if sentences == False : 
-                embed = discord.Embed(title=msg2.content, description="사전에 없는 단어입니다. 메롱")
-                await message.channel.send(embed=embed)
-                await client.change_presence(status=discord.Status.offline)
+            # if sentences == False : 
+            embed = discord.Embed(title=msg2.content, description=sentences)
+            await message.channel.send(embed=embed)
+            await client.change_presence(status=discord.Status.offline)
 
 
             # 사전에 있는 단어일 경우 뜻 출력해주기 
-            else : 
-                embed = discord.Embed(title=msg2.content, description=str(sentences))
-                await message.channel.send(embed=embed)
+            # else : 
+            #     embed = discord.Embed(title=msg2.content, description=str(sentences))
+            #     await message.channel.send(embed=embed)
 
-
-            # await message.channel.send(embed=embed)
-            
-            # if message.content.startswith('!끝') : 
-            #     break        
-        
-        # await message.channel.send('!종료')
-        # await client.change_presence(status=discord.Status.offline)
-        
 client.run(key["KEY"])

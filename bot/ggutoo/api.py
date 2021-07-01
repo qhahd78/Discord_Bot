@@ -9,7 +9,7 @@ from urllib.parse import urlencode, unquote, quote_plus
 #     key = json.load(file)
 
 def apifun (dictword) : 
-    print(dictword)
+    # print(dictword)
     url = 'https://stdict.korean.go.kr/api/search.do'
 
     # 파라미터 설정
@@ -23,7 +23,7 @@ def apifun (dictword) :
     response = requests.get(url + unquote(params))
     # 결과 값을 string 으로 저장 
     textres = response.text
-    print(textres)
+    # print(textres)
     # xml 형식 인식을 위해 Beautifulsoup 사용 
     soup = BeautifulSoup(textres, 'html.parser')
 
